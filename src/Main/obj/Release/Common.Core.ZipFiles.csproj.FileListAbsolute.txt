@@ -1,0 +1,8 @@
+C:\DevBuild\Tamu\GeoInnovation\Common\Core\ZipFiles\build\1.0.0\release\Tamu.GeoInnovation.Common.Core.ZipFiles.exe.config
+C:\DevBuild\Tamu\GeoInnovation\Common\Core\ZipFiles\build\1.0.0\release\Tamu.GeoInnovation.Common.Core.ZipFiles.exe
+C:\DevBuild\Tamu\GeoInnovation\Common\Core\ZipFiles\build\1.0.0\release\Tamu.GeoInnovation.Common.Core.ZipFiles.pdb
+C:\DevSource\Tamu\GeoInnovation\Common\Core\ZipFiles\src\Main\obj\Release\Tamu.GeoInnovation.Common.Core.ZipFiles.exe
+C:\DevSource\Tamu\GeoInnovation\Common\Core\ZipFiles\src\Main\obj\Release\Tamu.GeoInnovation.Common.Core.ZipFiles.pdb
+C:\DevSource\Tamu\GeoInnovation\Common\Core\ZipFiles\build\1.0.0\AnyCPU\release\Tamu.GeoInnovation.Common.Core.ZipFiles.exe.config
+C:\DevSource\Tamu\GeoInnovation\Common\Core\ZipFiles\build\1.0.0\AnyCPU\release\Tamu.GeoInnovation.Common.Core.ZipFiles.exe
+C:\DevSource\Tamu\GeoInnovation\Common\Core\ZipFiles\build\1.0.0\AnyCPU\release\Tamu.GeoInnovation.Common.Core.ZipFiles.pdb
