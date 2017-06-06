@@ -7,7 +7,7 @@
     <ProjectGuid>{C18EE65B-380B-4590-88BB-060F2A5E64EC}</ProjectGuid>
     <RootNamespace>Tamu.GeoInnovation.Common.Core.ZipFiles</RootNamespace>
     <AssemblyName>Tamu.GeoInnovation.Common.Core.ZipFiles</AssemblyName>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <ApplicationIcon />
     <WarningLevel>0</WarningLevel>
     <NoWarn />
@@ -67,9 +67,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\libs\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Scrapers.LinkedIn.JobScraper\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\..\..\_RepoConfig\SolutionFiles\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
