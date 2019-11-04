@@ -25,143 +25,142 @@
 // IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
 // OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System;
-using System.Text;
-using System.Collections;
-using System.IO;
-
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+using System;
+using System.Collections;
+using System.IO;
+using System.Text;
 
 namespace USC.GISResearchLab.Common.UnZipFile
 {
-  public class UnZip
-  {
-    private string _ZipFilePath;
-    private string _ZipPassword;
-    private ZipInputStream streamReader;
-    private ZipEntry theEntry;
-    private FileStream streamWriter;
-    private string _OutputDirectory;
-
-    public string OutputDirectory
+    public class UnZip
     {
-      get { return _OutputDirectory; }
-      set
-      {
-        if (Directory.Exists(value))
+        private string _ZipFilePath;
+        private string _ZipPassword;
+        private ZipInputStream streamReader;
+        private ZipEntry theEntry;
+        private FileStream streamWriter;
+        private string _OutputDirectory;
+
+        public string OutputDirectory
         {
-          _OutputDirectory = value;
-          if (_OutputDirectory.Substring(_OutputDirectory.Length - 1, 1) != "\\") _OutputDirectory = _OutputDirectory + "\\";
-        }
-        else throw new IOException("Output directory not exsist.");
-      }
-    }
-    public string ZipPassword
-    {
-      set { _ZipPassword = value; }
-    }
-    public string ZipFilePath
-    {
-      get { return _ZipFilePath; }
-      set { if (File.Exists(value)) _ZipFilePath = value; else throw new IOException("Zip file not found"); }
-    }
-
-    public UnZip(string zipFilePath)
-    {
-      _ZipPassword = "";
-      streamReader = null;
-      streamWriter = null;
-      theEntry = null;
-      ZipFilePath = zipFilePath;
-    }
-
-    public bool NeedPassword()
-    {
-      bool ret = false;
-      try
-      {
-        streamReader = new ZipInputStream(File.OpenRead(this._ZipFilePath));
-        while ((theEntry = streamReader.GetNextEntry()) != null)
-          if (theEntry.IsCrypted)
-          {
-            ret = true;
-            break;
-          }
-      }
-      catch (Exception ex)
-      {
-        throw new Exception("Error during opening/checking the zip file for encryption.", ex);
-      }
-      finally
-      {
-        theEntry = null;
-        if (streamReader != null)
-        {
-          streamReader.Close();
-          streamReader = null;
-        }
-      }
-      return ret;
-    }
-
-    public void DoUnZip()
-    {
-      try
-      {
-        string entryDirectoryName = "";
-        string entryFileName = "";
-        int size = 2048;
-        byte[] data = null;
-
-        if (_OutputDirectory == string.Empty) OutputDirectory = Path.GetDirectoryName(_ZipFilePath);
-
-        using (streamReader = new ZipInputStream(File.OpenRead(_ZipFilePath)))
-        {
-          theEntry = null;
-          streamReader.Password = this._ZipPassword;
-          while ((theEntry = streamReader.GetNextEntry()) != null)
-          {
-            entryDirectoryName = Path.GetDirectoryName(theEntry.Name);
-            entryFileName = Path.GetFileName(theEntry.Name);
-
-            // create directory
-            if (entryDirectoryName.Length > 0) Directory.CreateDirectory(OutputDirectory + entryDirectoryName);
-
-            if (entryFileName != String.Empty)
+            get { return _OutputDirectory; }
+            set
             {
-              using (streamWriter = File.Create(OutputDirectory + theEntry.Name))
-              {
-                data = new byte[size];
-                while (true)
+                if (Directory.Exists(value))
                 {
-                  size = streamReader.Read(data, 0, data.Length);
-                  if (size > 0) streamWriter.Write(data, 0, size);
-                  else break;
+                    _OutputDirectory = value;
+                    if (_OutputDirectory.Substring(_OutputDirectory.Length - 1, 1) != "\\") _OutputDirectory = _OutputDirectory + "\\";
                 }
-              }
+                else throw new IOException("Output directory not exsist.");
             }
-          }
         }
-      }
-      catch (Exception e)
-      {
-        throw new ZipException("Error during unzip.", e);
-      }
-      finally
-      {
-        theEntry = null;
-        if (streamWriter != null)
+        public string ZipPassword
         {
-          streamWriter.Close();
-          streamWriter = null;
+            set { _ZipPassword = value; }
         }
-        if (streamReader != null)
+        public string ZipFilePath
         {
-          streamReader.Close();
-          streamReader = null;
+            get { return _ZipFilePath; }
+            set { if (File.Exists(value)) _ZipFilePath = value; else throw new IOException("Zip file not found"); }
         }
-      }
+
+        public UnZip(string zipFilePath)
+        {
+            _ZipPassword = "";
+            streamReader = null;
+            streamWriter = null;
+            theEntry = null;
+            ZipFilePath = zipFilePath;
+        }
+
+        public bool NeedPassword()
+        {
+            bool ret = false;
+            try
+            {
+                streamReader = new ZipInputStream(File.OpenRead(this._ZipFilePath));
+                while ((theEntry = streamReader.GetNextEntry()) != null)
+                    if (theEntry.IsCrypted)
+                    {
+                        ret = true;
+                        break;
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error during opening/checking the zip file for encryption.", ex);
+            }
+            finally
+            {
+                theEntry = null;
+                if (streamReader != null)
+                {
+                    streamReader.Close();
+                    streamReader = null;
+                }
+            }
+            return ret;
+        }
+
+        public void DoUnZip()
+        {
+            try
+            {
+                string entryDirectoryName = "";
+                string entryFileName = "";
+                int size = 2048;
+                byte[] data = null;
+
+                if (_OutputDirectory == string.Empty) OutputDirectory = Path.GetDirectoryName(_ZipFilePath);
+
+                using (streamReader = new ZipInputStream(File.OpenRead(_ZipFilePath)))
+                {
+                    theEntry = null;
+                    streamReader.Password = this._ZipPassword;
+                    while ((theEntry = streamReader.GetNextEntry()) != null)
+                    {
+                        entryDirectoryName = Path.GetDirectoryName(theEntry.Name);
+                        entryFileName = Path.GetFileName(theEntry.Name);
+
+                        // create directory
+                        if (entryDirectoryName.Length > 0) Directory.CreateDirectory(OutputDirectory + entryDirectoryName);
+
+                        if (entryFileName != String.Empty)
+                        {
+                            using (streamWriter = File.Create(OutputDirectory + theEntry.Name))
+                            {
+                                data = new byte[size];
+                                while (true)
+                                {
+                                    size = streamReader.Read(data, 0, data.Length);
+                                    if (size > 0) streamWriter.Write(data, 0, size);
+                                    else break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ZipException("Error during unzip.", e);
+            }
+            finally
+            {
+                theEntry = null;
+                if (streamWriter != null)
+                {
+                    streamWriter.Close();
+                    streamWriter = null;
+                }
+                if (streamReader != null)
+                {
+                    streamReader.Close();
+                    streamReader = null;
+                }
+            }
+        }
     }
-  }
 }
